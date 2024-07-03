@@ -16,13 +16,13 @@ resource "azurerm_storage_account" "storage_account" {
 resource "azurerm_app_service_plan" "app_service_plan" {
   name                = var.plan_name
   resource_group_name = var.resource_group_name
-  location            = var.location
-  kind                = var.kind
-  reserved            = var.reserved
+  location            = var. location
+  kind                = "FunctionApp"   # Changed to FunctionApp for Function App
+  reserved            = false           # Changed reserved to false for Consumption plan
 
   sku {
-    tier = var.tier
-    size = var.size
+    tier = "Dynamic"    # Changed to Dynamic tier for Consumption plan
+    size = "Y1"         # Changed to Y1 size for Consumption plan
   }
 
   lifecycle {
@@ -42,7 +42,7 @@ resource "azurerm_function_app" "function_app" {
   os_type                    = var.os_type
 
   app_settings = {
-    funtions_worker_runtime = var.functions_worker_runtime
+    FUNCTIONS_WORKER_RUNTIME = var.functions_worker_runtime  # Corrected the spelling here
   }
 
   site_config {
